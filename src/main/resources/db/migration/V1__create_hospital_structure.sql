@@ -1,0 +1,12 @@
+CREATE TABLE hospitals (id UUID PRIMARY KEY, name VARCHAR(200) NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE UNIQUE INDEX uq_hospitals_name ON hospitals (lower(btrim(name)));
+CREATE TABLE branches (id UUID PRIMARY KEY, hospital_id UUID NOT NULL REFERENCES hospitals(id), name VARCHAR(200) NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE UNIQUE INDEX uq_branches_name ON branches (hospital_id, lower(btrim(name)));
+CREATE TABLE departments (id UUID PRIMARY KEY, branch_id UUID NOT NULL REFERENCES branches(id), name VARCHAR(200) NOT NULL, created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE UNIQUE INDEX uq_departments_name ON departments (branch_id, lower(btrim(name)));
+CREATE TYPE doctor_status AS ENUM ('ACTIVE', 'INACTIVE');
+CREATE TABLE doctors (id UUID PRIMARY KEY, hospital_id UUID NOT NULL REFERENCES hospitals(id), doctor_code VARCHAR(100) NOT NULL, name VARCHAR(200) NOT NULL, specialization VARCHAR(200) NOT NULL, professional_registration_number VARCHAR(100) NOT NULL, status doctor_status NOT NULL DEFAULT 'ACTIVE', created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE UNIQUE INDEX uq_doctors_code ON doctors (hospital_id, lower(btrim(doctor_code)));
+CREATE UNIQUE INDEX uq_doctors_registration ON doctors (hospital_id, lower(btrim(professional_registration_number)));
+CREATE TABLE doctor_departments (doctor_id UUID NOT NULL REFERENCES doctors(id), department_id UUID NOT NULL REFERENCES departments(id), PRIMARY KEY (doctor_id, department_id));
+CREATE TABLE audit_events (id UUID PRIMARY KEY, occurred_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, action VARCHAR(100) NOT NULL, target_type VARCHAR(100) NOT NULL, target_id UUID NOT NULL, hospital_id UUID REFERENCES hospitals(id), actor_identifier VARCHAR(200), metadata JSONB NOT NULL DEFAULT '{}'::jsonb);
