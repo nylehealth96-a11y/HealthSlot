@@ -1,1 +1,0 @@
-package com.hospital.smartqueue.doctor.infrastructure; import com.hospital.smartqueue.doctor.domain.Doctor; import org.springframework.data.jpa.repository.JpaRepository; import java.util.*; public interface DoctorRepository extends JpaRepository<Doctor,UUID>{List<Doctor> findByHospitalId(UUID id);}
