@@ -1,3 +1,0 @@
-package com.hospital.smartqueue.common.infrastructure;
-import jakarta.persistence.*; import java.time.Instant; import java.util.UUID;
-@Entity @Table(name="audit_events") public class AuditEvent { @Id private UUID id; private Instant occurredAt; private String action; private String targetType; private UUID targetId; private UUID hospitalId; private String actorIdentifier; protected AuditEvent(){} public AuditEvent(UUID id,Instant occurredAt,String action,String targetType,UUID targetId,UUID hospitalId,String actorIdentifier){this.id=id;this.occurredAt=occurredAt;this.action=action;this.targetType=targetType;this.targetId=targetId;this.hospitalId=hospitalId;this.actorIdentifier=actorIdentifier;} }
