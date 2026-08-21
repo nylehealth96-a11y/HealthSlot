@@ -22,9 +22,58 @@ components:
     ApiError:
       type: object
       required: [timestamp, status, code, message, path]
+      properties:
+        timestamp: { type: string, format: date-time }
+        status: { type: integer }
+        code: { type: string }
+        message: { type: string }
+        path: { type: string }
+    HospitalRequest:
+      type: object
+      required: [name]
+      properties: { name: { type: string, maxLength: 200 } }
+    HospitalResponse:
+      type: object
+      required: [id, name]
+      properties: { id: { type: string, format: uuid }, name: { type: string } }
+    BranchRequest:
+      type: object
+      required: [name]
+      properties: { name: { type: string, maxLength: 200 } }
+    BranchResponse:
+      type: object
+      required: [id, hospitalId, name]
+      properties: { id: { type: string, format: uuid }, hospitalId: { type: string, format: uuid }, name: { type: string } }
+    DepartmentRequest:
+      type: object
+      required: [name]
+      properties: { name: { type: string, maxLength: 200 } }
+    DepartmentResponse:
+      type: object
+      required: [id, branchId, name]
+      properties: { id: { type: string, format: uuid }, branchId: { type: string, format: uuid }, name: { type: string } }
     DoctorRequest:
       type: object
       required: [doctorCode, name, specialization, professionalRegistrationNumber, departmentIds]
+      properties:
+        doctorCode: { type: string, maxLength: 80 }
+        name: { type: string, maxLength: 200 }
+        specialization: { type: string, maxLength: 200 }
+        professionalRegistrationNumber: { type: string, maxLength: 120 }
+        status: { type: string, enum: [ACTIVE, INACTIVE] }
+        departmentIds: { type: array, minItems: 1, items: { type: string, format: uuid } }
+    DoctorResponse:
+      type: object
+      required: [id, hospitalId, doctorCode, name, specialization, professionalRegistrationNumber, status, departmentIds]
+      properties:
+        id: { type: string, format: uuid }
+        hospitalId: { type: string, format: uuid }
+        doctorCode: { type: string }
+        name: { type: string }
+        specialization: { type: string }
+        professionalRegistrationNumber: { type: string }
+        status: { type: string, enum: [ACTIVE, INACTIVE] }
+        departmentIds: { type: array, items: { type: string, format: uuid } }
     DoctorStatusRequest:
       type: object
       required: [status]

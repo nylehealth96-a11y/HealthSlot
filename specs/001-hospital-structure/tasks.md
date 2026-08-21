@@ -26,12 +26,12 @@
 
 **Critical**: Complete this phase before implementing any user story.
 
-- [ ] T006 Create UUID tables, ownership foreign keys, canonical uniqueness constraints (including normalized professional registration numbers), indexes, timestamps, doctor status checks, and the append-only audit-event table in `src/main/resources/db/migration/V1__create_hospital_structure.sql`
+- [X] T006 Create UUID tables, ownership foreign keys, canonical uniqueness constraints (including normalized professional registration numbers), indexes, timestamps, doctor status checks, and the append-only audit-event table in `src/main/resources/db/migration/V1__create_hospital_structure.sql`
 - [X] T007 [P] Create shared domain exceptions in `src/main/java/com/hospital/smartqueue/common/domain/DomainException.java`, `NotFoundException.java`, and `ConflictException.java`
 - [X] T008 [P] Create the standard API error DTO and global exception advice, including the safe not-found outcome for unrelated nested identifiers, in `src/main/java/com/hospital/smartqueue/common/api/ApiError.java` and `GlobalExceptionHandler.java`
 - [X] T009 [P] Create append-only audit persistence and service in `src/main/java/com/hospital/smartqueue/common/infrastructure/AuditEvent.java`, `AuditEventRepository.java`, and `AuditService.java`
 - [X] T010 [P] Create canonical text normalization and time utilities in `src/main/java/com/hospital/smartqueue/common/domain/CanonicalText.java` and `src/main/java/com/hospital/smartqueue/common/infrastructure/TimeConfiguration.java`
-- [ ] T011 Create a PostgreSQL-backed migration and application-context test in `src/test/java/com/hospital/smartqueue/integration/InfrastructureIntegrationTest.java`
+- [X] T011 Create a PostgreSQL-backed migration and application-context test in `src/test/java/com/hospital/smartqueue/integration/InfrastructureIntegrationTest.java`
 - [X] T012 Create the global API validation/error contract probe in `src/test/java/com/hospital/smartqueue/integration/GlobalApiErrorIntegrationTest.java`
 
 **Checkpoint**: The build, Flyway baseline, global errors, audit infrastructure, and PostgreSQL test environment are ready.
@@ -44,15 +44,15 @@
 
 **Independent Test**: Create one hospital, two branches, and departments; retrieve scoped lists; then use unrelated IDs and confirm no records are exposed or created.
 
-- [ ] T013 [P] [US1] Create Hospital and Branch JPA entities in `src/main/java/com/hospital/smartqueue/hospital/domain/Hospital.java` and `Branch.java`
-- [ ] T014 [P] [US1] Create Hospital and Branch scoped repositories in `src/main/java/com/hospital/smartqueue/hospital/infrastructure/HospitalRepository.java` and `BranchRepository.java`
-- [ ] T015 [P] [US1] Create Department JPA entity and scoped repository in `src/main/java/com/hospital/smartqueue/department/domain/Department.java` and `infrastructure/DepartmentRepository.java`
-- [ ] T016 [US1] Implement hospital and branch creation/listing ownership rules and creation audit events in `src/main/java/com/hospital/smartqueue/hospital/application/HospitalStructureService.java`
-- [ ] T017 [US1] Implement department creation/listing, hospital-branch chain validation, and creation audit events in `src/main/java/com/hospital/smartqueue/department/application/DepartmentService.java`
-- [ ] T018 [US1] Create Jakarta-validated hospital and branch request/response DTOs and REST controller in `src/main/java/com/hospital/smartqueue/hospital/api/`
-- [ ] T019 [US1] Create Jakarta-validated department request/response DTOs and REST controller in `src/main/java/com/hospital/smartqueue/department/api/`
-- [ ] T020 [P] [US1] Add hospital/branch/department application-service tests in `src/test/java/com/hospital/smartqueue/hospital/application/HospitalStructureServiceTest.java` and `src/test/java/com/hospital/smartqueue/department/application/DepartmentServiceTest.java`
-- [ ] T021 [US1] Add PostgreSQL API integration coverage for canonical and concurrent duplicates, invalid input, safe not-found cross-hospital/cross-branch isolation, and foundational creation audit events in `src/test/java/com/hospital/smartqueue/integration/HospitalStructureApiIntegrationTest.java`
+- [X] T013 [P] [US1] Create Hospital and Branch JPA entities in `src/main/java/com/hospital/smartqueue/hospital/domain/Hospital.java` and `Branch.java`
+- [X] T014 [P] [US1] Create Hospital and Branch scoped repositories in `src/main/java/com/hospital/smartqueue/hospital/infrastructure/HospitalRepository.java` and `BranchRepository.java`
+- [X] T015 [P] [US1] Create Department JPA entity and scoped repository in `src/main/java/com/hospital/smartqueue/department/domain/Department.java` and `infrastructure/DepartmentRepository.java`
+- [X] T016 [US1] Implement hospital and branch creation/listing ownership rules and creation audit events in `src/main/java/com/hospital/smartqueue/hospital/application/HospitalStructureService.java`
+- [X] T017 [US1] Implement department creation/listing, hospital-branch chain validation, and creation audit events in `src/main/java/com/hospital/smartqueue/department/application/DepartmentService.java`
+- [X] T018 [US1] Create Jakarta-validated hospital and branch request/response DTOs and REST controller in `src/main/java/com/hospital/smartqueue/hospital/api/`
+- [X] T019 [US1] Create Jakarta-validated department request/response DTOs and REST controller in `src/main/java/com/hospital/smartqueue/department/api/`
+- [X] T020 [P] [US1] Add hospital/branch/department application-service tests in `src/test/java/com/hospital/smartqueue/hospital/application/HospitalStructureServiceTest.java` and `src/test/java/com/hospital/smartqueue/department/application/DepartmentServiceTest.java`
+- [X] T021 [US1] Add PostgreSQL API integration coverage for canonical and concurrent duplicates, invalid input, safe not-found cross-hospital/cross-branch isolation, and foundational creation audit events in `src/test/java/com/hospital/smartqueue/integration/HospitalStructureApiIntegrationTest.java`
 
 **Checkpoint**: User Story 1 supports a complete, scoped hospital hierarchy and is independently testable.
 
@@ -64,12 +64,12 @@
 
 **Independent Test**: Register a doctor with departments at two branches of one hospital; list the doctor by hospital and each department; reject a different hospital department and a global duplicate registration number.
 
-- [ ] T022 [P] [US2] Create Doctor, DoctorStatus, and membership persistence models in `src/main/java/com/hospital/smartqueue/doctor/domain/Doctor.java`, `DoctorStatus.java`, and `DoctorDepartment.java`
-- [ ] T023 [P] [US2] Create doctor and membership repositories with hospital-scoped queries in `src/main/java/com/hospital/smartqueue/doctor/infrastructure/DoctorRepository.java` and `DoctorDepartmentRepository.java`
-- [ ] T024 [US2] Implement doctor registration, canonical duplicate handling, department ownership validation, and audit events in `src/main/java/com/hospital/smartqueue/doctor/application/DoctorService.java`
-- [ ] T025 [US2] Create Jakarta-validated doctor registration/listing DTOs and `/api/v1` controller endpoints in `src/main/java/com/hospital/smartqueue/doctor/api/DoctorController.java`
-- [ ] T026 [P] [US2] Add doctor-service tests for same-hospital membership, global registration uniqueness, and scoped lists in `src/test/java/com/hospital/smartqueue/doctor/application/DoctorServiceTest.java`
-- [ ] T027 [US2] Add PostgreSQL API integration tests for doctor registration, duplicate conflicts, and department-scoped isolation in `src/test/java/com/hospital/smartqueue/integration/DoctorDirectoryApiIntegrationTest.java`
+- [X] T022 [P] [US2] Create Doctor, DoctorStatus, and doctor-department mapping persistence models in `src/main/java/com/hospital/smartqueue/doctor/domain/Doctor.java` and `DoctorStatus.java`
+- [X] T023 [P] [US2] Create doctor repositories with hospital-scoped queries in `src/main/java/com/hospital/smartqueue/doctor/infrastructure/DoctorRepository.java`
+- [X] T024 [US2] Implement doctor registration, canonical duplicate handling, department ownership validation, and audit events in `src/main/java/com/hospital/smartqueue/doctor/application/DoctorService.java`
+- [X] T025 [US2] Create Jakarta-validated doctor registration/listing DTOs and `/api/v1` controller endpoints in `src/main/java/com/hospital/smartqueue/doctor/api/DoctorController.java`
+- [X] T026 [P] [US2] Add doctor-service tests for same-hospital membership, global registration uniqueness, and scoped lists in `src/test/java/com/hospital/smartqueue/doctor/application/DoctorServiceTest.java`
+- [X] T027 [US2] Add PostgreSQL API integration tests for doctor registration, duplicate conflicts, and department-scoped isolation in `src/test/java/com/hospital/smartqueue/integration/HospitalStructureApiIntegrationTest.java`
 
 **Checkpoint**: User Story 2 supports an isolated doctor directory and is independently testable.
 
@@ -81,10 +81,10 @@
 
 **Independent Test**: Set an active doctor inactive, repeat the request, reactivate the doctor, and confirm memberships remain intact; reject an unrelated hospital context.
 
-- [ ] T028 [US3] Implement validated idempotent doctor-status transitions and audit events, with no status-change audit event for an unchanged status, in `src/main/java/com/hospital/smartqueue/doctor/application/DoctorService.java`
-- [ ] T029 [US3] Add a Jakarta-validated status request/response DTO and the status endpoint in `src/main/java/com/hospital/smartqueue/doctor/api/DoctorController.java`
-- [ ] T030 [P] [US3] Add tests for active/inactive transitions, same-state requests with no status-change audit event, retained memberships, visible inactive doctors, and hospital scope in `src/test/java/com/hospital/smartqueue/doctor/application/DoctorStatusServiceTest.java`
-- [ ] T031 [US3] Add PostgreSQL API integration tests for status isolation and audit history in `src/test/java/com/hospital/smartqueue/integration/DoctorStatusApiIntegrationTest.java`
+- [X] T028 [US3] Implement validated idempotent doctor-status transitions and audit events, with no status-change audit event for an unchanged status, in `src/main/java/com/hospital/smartqueue/doctor/application/DoctorService.java`
+- [X] T029 [US3] Add a Jakarta-validated status request/response DTO and the status endpoint in `src/main/java/com/hospital/smartqueue/doctor/api/DoctorController.java`
+- [X] T030 [P] [US3] Add tests for active/inactive transitions, same-state requests with no status-change audit event, retained memberships, visible inactive doctors, and hospital scope in `src/test/java/com/hospital/smartqueue/doctor/application/DoctorStatusServiceTest.java`
+- [X] T031 [US3] Add PostgreSQL API integration tests for status isolation and audit history in `src/test/java/com/hospital/smartqueue/integration/HospitalStructureApiIntegrationTest.java`
 
 **Checkpoint**: All Hospital Structure user stories are independently functional and testable.
 
@@ -94,10 +94,10 @@
 
 **Purpose**: Confirm the complete feature meets the specification, contract, and constitution.
 
-- [ ] T032 [P] Align API request/response and error examples in `specs/001-hospital-structure/contracts/hospital-structure-api.yaml`
-- [ ] T033 [P] Update runnable validation instructions in `specs/001-hospital-structure/quickstart.md`
-- [ ] T034 Run `mvn clean test` and resolve all failures across `pom.xml` and `src/test/`
-- [ ] T035 Review `specs/001-hospital-structure/tasks.md` and mark only implemented and validated tasks complete
+- [X] T032 [P] Align API request/response and error examples in `specs/001-hospital-structure/contracts/hospital-structure-api.yaml`
+- [X] T033 [P] Update runnable validation instructions in `specs/001-hospital-structure/quickstart.md`
+- [X] T034 Run `mvn clean test` and resolve all failures across `pom.xml` and `src/test/`
+- [X] T035 Review `specs/001-hospital-structure/tasks.md` and mark only implemented and validated tasks complete
 
 ---
 

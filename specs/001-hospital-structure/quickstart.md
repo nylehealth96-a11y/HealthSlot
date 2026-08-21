@@ -4,6 +4,7 @@
 
 - Java 17 and Maven.
 - PostgreSQL credentials from environment variables or external configuration.
+- Docker Desktop or another Docker-compatible engine for PostgreSQL Testcontainers tests.
 
 ## Run and validate
 
