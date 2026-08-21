@@ -4,9 +4,19 @@
 
 **Created**: 2026-08-20
 
+**Last Updated**: 2026-08-21
+
 **Status**: Draft
 
 **Input**: User description: "Build the hospital structure management foundation."
+
+## Clarifications
+
+### Session 2026-08-21
+
+- Q: Should a doctor’s professional registration number be unique across all hospitals or only within the doctor’s hospital? → A: Unique across all hospitals.
+- Q: Should names and doctor codes treat changes in letter case or surrounding spaces as duplicates? → A: Treat case and surrounding-space variants as duplicates.
+- Q: Should hospital names be unique across the entire platform? → A: Hospital names are unique across the platform.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -89,11 +99,15 @@ doctor view, then reactivate the doctor and verify the active status.
 - A branch cannot be viewed as belonging to a hospital other than its recorded hospital.
 - A department cannot be viewed as belonging to a branch other than its recorded branch.
 - A doctor registration with no department, a duplicate doctor code in the same hospital, or a
-  duplicate professional registration number in the same hospital is rejected.
+  duplicate professional registration number is rejected.
+- Concurrent attempts to create the same normalized hospital, branch, department, doctor code,
+  or professional registration number result in at most one stored record; every losing attempt
+  is rejected without changing existing data.
 - A doctor may be linked only to departments belonging to the doctor's hospital, including
   departments at different branches of that hospital.
 - Repeating a request to set a doctor to its current active or inactive status leaves the status
-  unchanged and returns the current doctor details.
+  unchanged, returns the current doctor details, retains every department association, and does
+  not create a status-change audit event.
 - This feature does not delete hospitals, branches, departments, doctors, or doctor-department
   associations.
 
@@ -102,6 +116,8 @@ doctor view, then reactivate the doctor and verify the active status.
 ### Functional Requirements
 
 - **FR-001**: The system MUST allow administrators to create and view hospitals.
+- **FR-001a**: A hospital name MUST be unique across the platform after applying the feature's
+  duplicate normalization rules.
 - **FR-002**: The system MUST allow administrators to create branches for a hospital and view
   only the branches belonging to a selected hospital.
 - **FR-003**: Each branch MUST belong to exactly one hospital, and the system MUST reject any
@@ -114,16 +130,20 @@ doctor view, then reactivate the doctor and verify the active status.
 - **FR-006**: The system MUST allow administrators to register a doctor within a hospital with a
   human-readable doctor code, name, specialization, professional registration number, active or
   inactive status, and at least one department association.
-- **FR-007**: A doctor code and professional registration number MUST each be unique within the
-  doctor's hospital.
+- **FR-007**: A doctor code MUST be unique within the doctor's hospital. A professional
+  registration number MUST be unique across all hospitals.
 - **FR-008**: The system MUST allow a doctor to be associated with one or more departments only
   when every selected department belongs to that doctor's hospital.
 - **FR-009**: The system MUST allow administrators to view all doctors for a hospital and view
-  only doctors associated with a selected department.
+  only doctors associated with a selected department. These directory views MUST include both
+  active and inactive doctors and show each doctor's status.
 - **FR-010**: The system MUST allow administrators to activate and deactivate a registered doctor
   without removing the doctor's details or department associations.
 - **FR-011**: The system MUST reject invalid, incomplete, duplicate, or cross-hospital and
   cross-branch foundational-data requests without creating or changing records.
+- **FR-011a**: A nested request using an identifier outside its stated hospital or branch
+  ownership chain MUST return the same safe not-found outcome without revealing the unrelated
+  record's existence.
 - **FR-012**: The system MUST retain creation and status-change history for hospitals, branches,
   departments, and doctors sufficient to identify what changed and when; the history MUST not
   include unnecessary medical or patient information.
@@ -131,6 +151,9 @@ doctor view, then reactivate the doctor and verify the active status.
   patient registration, appointment booking, or queue management in this feature.
 - **FR-014**: Authentication and authorization mechanisms are outside this feature's scope;
   interactions in this specification refer to administrators as the intended actor.
+- **FR-015**: Duplicate checks for hospital, branch, and department names, doctor codes, and
+  professional registration numbers MUST ignore surrounding whitespace and letter-case
+  differences while retaining a readable entered value for display.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -163,8 +186,11 @@ doctor view, then reactivate the doctor and verify the active status.
 
 ## Assumptions
 
-- Hospital, branch, and department names are required; branch names are unique within a hospital,
-  and department names are unique within a branch.
+- Hospital, branch, and department names are required. Hospital names are unique across the
+  platform, branch names are unique within a hospital, and department names are unique within a
+  branch.
+- Duplicate-sensitive names, doctor codes, and professional registration numbers are trimmed and
+  compared without regard to letter case; the trimmed entered form remains the display value.
 - A doctor is registered to one hospital but may serve departments across multiple branches of
   that same hospital.
 - A newly registered doctor is active unless an administrator explicitly records the doctor as

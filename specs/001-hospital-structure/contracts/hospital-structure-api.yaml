@@ -5,18 +5,18 @@ paths:
     get: { summary: List hospitals, responses: { '200': { description: List } } }
     post: { summary: Create hospital, responses: { '201': { description: Created }, '400': { description: Invalid }, '409': { description: Duplicate } } }
   /api/v1/hospitals/{hospitalId}/branches:
-    get: { summary: List hospital branches, responses: { '200': { description: List }, '404': { description: Not found } } }
+    get: { summary: List hospital branches, responses: { '200': { description: List }, '404': { description: Safe not found } } }
     post: { summary: Create branch, responses: { '201': { description: Created }, '409': { description: Duplicate } } }
   /api/v1/hospitals/{hospitalId}/branches/{branchId}/departments:
-    get: { summary: List branch departments, responses: { '200': { description: List }, '404': { description: Unrelated branch } } }
+    get: { summary: List branch departments, responses: { '200': { description: List }, '404': { description: Safe not found } } }
     post: { summary: Create department, responses: { '201': { description: Created }, '409': { description: Duplicate } } }
   /api/v1/hospitals/{hospitalId}/doctors:
     get: { summary: List hospital doctors, responses: { '200': { description: List } } }
     post: { summary: Register doctor, responses: { '201': { description: Created }, '400': { description: Invalid membership }, '409': { description: Duplicate } } }
   /api/v1/hospitals/{hospitalId}/departments/{departmentId}/doctors:
-    get: { summary: List department doctors, responses: { '200': { description: List }, '404': { description: Unrelated department } } }
+    get: { summary: List department doctors, responses: { '200': { description: List }, '404': { description: Safe not found } } }
   /api/v1/hospitals/{hospitalId}/doctors/{doctorId}/status:
-    patch: { summary: Set doctor active or inactive, responses: { '200': { description: Updated }, '404': { description: Unrelated doctor } } }
+    patch: { summary: Set doctor active or inactive, responses: { '200': { description: Updated }, '404': { description: Safe not found } } }
 components:
   schemas:
     ApiError:

@@ -26,8 +26,10 @@ PostgreSQL `timestamptz` in UTC.
 
 **Decision**: Branches reference hospitals, departments reference branches, and doctors reference
 hospitals. Application services verify each ownership chain; repository queries scope every
-read/write by hospital. Duplicate-sensitive values are trimmed and lowercased with `Locale.ROOT`;
-database uniqueness is the final concurrent-request authority.
+read/write by hospital. Hospital names and professional registration numbers are globally unique;
+branch names and doctor codes are unique per hospital; department names are unique per branch.
+Duplicate-sensitive values are trimmed and lowercased with `Locale.ROOT`; database uniqueness is
+the final concurrent-request authority.
 
 **Rationale**: It prevents both unrelated-ID access and case/whitespace duplicate records.
 

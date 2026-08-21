@@ -1,6 +1,6 @@
 # Implementation Plan: Hospital Structure Management
 
-**Branch**: `001-hospital-structure` | **Date**: 2026-08-20 | **Spec**: [spec.md](spec.md)
+**Branch**: `001-hospital-structure` | **Date**: 2026-08-21 | **Spec**: [spec.md](spec.md)
 
 ## Summary
 
@@ -23,6 +23,8 @@ Spring Boot Test, Testcontainers PostgreSQL
 Redis, Kafka, WebSockets, authentication, or frontend.
 **Scale/Scope**: Hospital structure and doctor directory only; no deletion, schedules, patients,
 appointments, or queues.
+**Database Evolution**: Flyway `V1__create_hospital_structure.sql` creates only the foundational
+hospital, branch, department, doctor, doctor-department membership, and audit schema.
 
 ## Constitution Check
 
