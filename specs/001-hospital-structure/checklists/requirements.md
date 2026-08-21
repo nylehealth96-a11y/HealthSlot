@@ -1,7 +1,8 @@
 # Specification Quality Checklist: Hospital Structure Management
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
-**Created**: 2026-08-20
+**Created**: 2026-08-21
+
 **Feature**: [spec.md](../spec.md)
 
 ## Content Quality
@@ -31,5 +32,5 @@
 
 ## Notes
 
-- Validation passed on 2026-08-20. Reasonable defaults for uniqueness, initial doctor status,
+- Validation passed on 2026-08-21. Reasonable defaults for uniqueness, initial doctor status,
   and same-hospital multi-branch department associations are recorded in Assumptions.

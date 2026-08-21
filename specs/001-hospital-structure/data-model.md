@@ -15,9 +15,13 @@ display values are trimmed; canonical trimmed/lowercase values are used for uniq
 ## Integrity and Lifecycle Rules
 
 - A branch belongs to one hospital, a department to one branch, and a doctor to one hospital.
-- Nested reads and writes verify the hospital ownership chain. Unrelated IDs return a safe
-  not-found or ownership-conflict response.
+- Nested reads and writes verify the hospital ownership chain. Unrelated IDs return the same safe
+  not-found response without disclosing the unrelated record.
 - Foreign keys prevent dangling records; database unique constraints/indexes prevent canonical
   duplicates under concurrent requests.
 - Doctor transitions are `ACTIVE -> INACTIVE`, `INACTIVE -> ACTIVE`, and idempotent same-state
-  requests. Deletion is not implemented.
+  requests; a same-state request creates no status-change audit event. Directory reads include
+  both states. Deletion is not implemented.
+- `V1__create_hospital_structure.sql` owns these foundational tables, constraints, supporting
+  ownership indexes, and audit-event persistence; later features add migrations rather than
+  altering this feature's scope.

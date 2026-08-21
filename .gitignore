@@ -1,8 +1,9 @@
 target/
 *.class
 *.jar
-.env
-.env.*
+.gradle/
+build/
+.env*
 .idea/
 .vscode/
 *.log
