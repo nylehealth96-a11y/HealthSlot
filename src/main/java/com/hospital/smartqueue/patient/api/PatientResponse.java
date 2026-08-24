@@ -1,0 +1,2 @@
+package com.hospital.smartqueue.patient.api; import com.hospital.smartqueue.patient.domain.*; import java.time.*; import java.util.*;
+public record PatientResponse(UUID id,String patientNumber,String firstName,String lastName,LocalDate dateOfBirth,Gender gender,String mobileNumber,String email,String address,long version){public static PatientResponse from(Patient p){return new PatientResponse(p.getId(),p.getPatientNumber(),p.getFirstName(),p.getLastName(),p.getDateOfBirth(),p.getGender(),p.getMobileNumber(),p.getEmail(),p.getAddress(),p.getVersion());}}
