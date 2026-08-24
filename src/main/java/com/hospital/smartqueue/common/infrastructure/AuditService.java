@@ -19,7 +19,11 @@ public class AuditService {
     }
 
     public void record(String action, String targetType, UUID targetId, UUID hospitalId, String metadata) {
+        record(action, targetType, targetId, hospitalId, SYSTEM_ACTOR, metadata);
+    }
+
+    public void record(String action, String targetType, UUID targetId, UUID hospitalId, String actorReference, String metadata) {
         auditEventRepository.save(new AuditEvent(
-                Instant.now(clock), action, targetType, targetId, hospitalId, SYSTEM_ACTOR, metadata));
+                Instant.now(clock), action, targetType, targetId, hospitalId, actorReference, metadata));
     }
 }
