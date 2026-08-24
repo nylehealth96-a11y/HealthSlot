@@ -1,0 +1,3 @@
+package com.hospital.smartqueue.doctor.scheduling.domain;
+import jakarta.persistence.*; import org.hibernate.annotations.UuidGenerator; import java.time.*; import java.util.*;
+@Entity @Table(name="schedule_breaks") public class ScheduleBreak { @Id @GeneratedValue @UuidGenerator private UUID id; @ManyToOne @JoinColumn(name="working_period_id") private WorkingPeriod period; @Column(name="start_time") private LocalTime start; @Column(name="end_time") private LocalTime end; protected ScheduleBreak(){} public ScheduleBreak(WorkingPeriod p,LocalTime s,LocalTime e){period=p;start=s;end=e;} public LocalTime start(){return start;} public LocalTime end(){return end;} }
