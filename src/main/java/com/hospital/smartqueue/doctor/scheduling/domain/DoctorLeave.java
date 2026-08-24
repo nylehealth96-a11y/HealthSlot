@@ -1,0 +1,3 @@
+package com.hospital.smartqueue.doctor.scheduling.domain;
+import jakarta.persistence.*; import org.hibernate.annotations.UuidGenerator; import java.time.*; import java.util.*;
+@Entity @Table(name="doctor_leaves") public class DoctorLeave { @Id @GeneratedValue @UuidGenerator private UUID id; @Column(name="doctor_id") private UUID doctorId; @Column(name="branch_id") private UUID branchId; @Column(name="start_date") private LocalDate startDate; @Column(name="end_date") private LocalDate endDate; @Version private long version; protected DoctorLeave(){} public DoctorLeave(UUID d,UUID b,LocalDate s,LocalDate e){doctorId=d;branchId=b;startDate=s;endDate=e;} public UUID getId(){return id;} public boolean covers(LocalDate d){return !d.isBefore(startDate)&&!d.isAfter(endDate);} }

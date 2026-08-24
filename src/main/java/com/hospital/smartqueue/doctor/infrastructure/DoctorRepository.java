@@ -10,4 +10,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, UUID> {
     Optional<Doctor> findByIdAndHospitalId(UUID id, UUID hospitalId);
     @Query("select distinct d from Doctor d join d.departments department where d.hospitalId = :hospitalId and department.id = :departmentId order by d.name")
     List<Doctor> findAllByHospitalIdAndDepartmentId(UUID hospitalId, UUID departmentId);
+    @Query("select count(d) > 0 from Doctor d join d.departments department where d.id = :doctorId and d.hospitalId = :hospitalId and department.branchId = :branchId")
+    boolean existsByIdAndHospitalIdAndBranchId(UUID doctorId, UUID hospitalId, UUID branchId);
 }

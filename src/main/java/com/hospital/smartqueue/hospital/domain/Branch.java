@@ -18,6 +18,7 @@ public class Branch {
     @Id @GeneratedValue @UuidGenerator private UUID id;
     @Column(name = "hospital_id", nullable = false, updatable = false) private UUID hospitalId;
     @Column(nullable = false) private String name;
+    @Column(nullable = false) private String timezone = "UTC";
     @Column(name = "canonical_name", nullable = false) private String canonicalName;
     @Column(name = "created_at", nullable = false) private Instant createdAt;
     @Column(name = "updated_at", nullable = false) private Instant updatedAt;
@@ -28,4 +29,5 @@ public class Branch {
     public UUID getId() { return id; }
     public UUID getHospitalId() { return hospitalId; }
     public String getName() { return name; }
+    public String getTimezone() { return timezone; }
 }

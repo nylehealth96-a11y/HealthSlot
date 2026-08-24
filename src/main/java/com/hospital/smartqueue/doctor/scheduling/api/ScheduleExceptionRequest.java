@@ -1,0 +1,1 @@
+package com.hospital.smartqueue.doctor.scheduling.api; import jakarta.validation.constraints.*; import java.time.*; public record ScheduleExceptionRequest(@NotNull LocalDate date,@PositiveOrZero Long expectedVersion){}

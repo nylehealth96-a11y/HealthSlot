@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DomainException.class)
     ResponseEntity<ApiError> handleDomain(DomainException exception, HttpServletRequest request) {
-        HttpStatus status = "NOT_FOUND".equals(exception.getCode()) ? HttpStatus.NOT_FOUND : HttpStatus.CONFLICT;
+        HttpStatus status = switch (exception.getCode()) { case "NOT_FOUND" -> HttpStatus.NOT_FOUND; case "UNAUTHENTICATED" -> HttpStatus.UNAUTHORIZED; case "FORBIDDEN" -> HttpStatus.FORBIDDEN; case "VALIDATION_ERROR" -> HttpStatus.BAD_REQUEST; default -> HttpStatus.CONFLICT; };
         return error(status, exception.getCode(), exception.getMessage(), request);
     }
 
