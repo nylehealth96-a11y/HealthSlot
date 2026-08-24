@@ -1,0 +1,2 @@
+package com.hospital.smartqueue.patient.api; import com.hospital.smartqueue.patient.domain.*; import jakarta.validation.constraints.*; import java.time.LocalDate;
+public record RegisterPatientRequest(@NotBlank String firstName,@NotBlank String lastName,@NotNull @PastOrPresent LocalDate dateOfBirth,@NotNull Gender gender,@NotBlank String mobileNumber,@Email String email,String address,EmergencyContact emergencyContact){}
